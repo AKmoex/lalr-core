@@ -177,6 +177,33 @@ void LR::items() {
 
 // LALR合并项目集族
 void LR::merge(){
+
+    // 遍历项目集族
+//    cout<<"--------------------------------------------------"<<endl<<endl;
+//    for (const auto& I : C) {
+//        vector<string>s;
+//        int i = &I - &C[0];
+//        cout<<endl<<"项目"<<i<<endl;
+//        for (const auto& p : I.prods) { // 列出项目
+//            vector<string>v=p.displayStr2();
+//            cout<<v[0]<<"   "<<v[1]<<"  ";
+//            for(int m=2;m<v.size();m++){
+//                cout<<v[m]<<",";
+//            }
+//            cout<<endl;
+//        }
+//        cout<<endl<<endl;
+//    }
+
+    cout<<"--------------------------------------------------"<<endl<<endl;
+    // 遍历GOTO
+    cout<<"遍历GOTO表"<<endl;
+    for(map<pair<int,char>,int>::iterator it = GOTO.begin(); it != GOTO.end(); it++){
+        cout<<it->first.first<<" + "<<it->first.second<<" -> "<<it->second<<endl;
+    }
+    cout<<"--------------------------------------------------"<<endl<<endl;
+
+
     map<int,vector<int>>same;
     set<int>skip_item;
     for(int i=1;i<C.size();i++){
@@ -210,30 +237,73 @@ void LR::merge(){
         }
 
     }
+
     // 看看一共有多少相同项
     for(map<int,vector<int>>::iterator it = same.begin(); it != same.end(); it++){
+        cout<<"结束1"<<endl;
+
         cout<<it->first<<": ";
         for(int i=0;i<it->second.size();i++){
             int same_item=it->second[i];
+
             // 寻找原GOTO表中由same_item射出的弧
-
             for(map<pair<int,char>,int>::iterator it2 = GOTO.begin(); it2 != GOTO.end(); it2++){
-                // 找到该项目集
+                // 找到射出弧
                 if(it2->first.first==same_item){
-
+                    // 判断射出弧的终点是否是合并后的自身项目集
+                    // false代表不是自身
+                    bool zhong=false;
+                    for(int zz=0;zz<it->second.size();zz++){
+                        if(it2->second==it->second[zz]){
+                            zhong=true;
+                        }
+                    }
+                    // 终点是自身
+                    if(zhong){
+                        GOTO[make_pair(it->first,it2->first.second)]=it->first;
+                    }
+                    else{
+                        GOTO[make_pair(it->first,it2->first.second)]=it2->second;
+                    }
                 }
-                cout<<it2->first.first<<" + "<<it2->first.second<<" -> "<<it2->second<<endl;
+            }
+
+            // 寻找原GOTO表中射向same_item的弧
+            for(map<pair<int,char>,int>::iterator it2 = GOTO.begin(); it2 != GOTO.end(); it2++){
+                // 找到射向弧
+                if(it2->second==same_item){
+                    GOTO[make_pair(it2->first.first,it2->first.second)]=it->first;
+                }
+            }
+
+            // 删除所有与same_item有关的弧
+            map<pair<int,char>,int>g=GOTO;
+
+            for(map<pair<int,char>,int>::iterator it2 = g.begin(); it2 != g.end(); it2++){
+                // 找到射出弧
+                if(it2->first.first==same_item){
+                    // 删除它
+                    GOTO.erase(make_pair(it2->first.first,it2->first.second));
+                }
+
+                // 找到射向弧
+                if(it2->second==same_item){
+                    GOTO.erase(make_pair(it2->first.first,it2->first.second));
+                }
+
             }
 
         }
-        cout<<endl;
+
     }
 
+    cout<<"--------------------------------------------------"<<endl<<endl;
     // 遍历GOTO
     cout<<"遍历GOTO表"<<endl;
     for(map<pair<int,char>,int>::iterator it = GOTO.begin(); it != GOTO.end(); it++){
         cout<<it->first.first<<" + "<<it->first.second<<" -> "<<it->second<<endl;
     }
+    cout<<"--------------------------------------------------"<<endl<<endl;
 
 //    for (const auto& I : C) {
 //        vector<string>s;
@@ -262,7 +332,7 @@ void LR::merge(){
 
 void LR::run() {
     build_table();
-
+    return ;
     draw_graph();
 
     web_output_table();
@@ -275,6 +345,7 @@ void LR::build_table() {
     items();
 
     merge();
+    return ;
     // 遍历每个状态(项目集)
     for (int i = 0; i < C.size(); i++) {
         const Item& item = C[i];
