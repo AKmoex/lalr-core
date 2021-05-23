@@ -240,9 +240,7 @@ void LR::merge(){
 
     // 看看一共有多少相同项
     for(map<int,vector<int>>::iterator it = same.begin(); it != same.end(); it++){
-        cout<<"结束1"<<endl;
-
-        cout<<it->first<<": ";
+        cout<<it->first<<":";
         for(int i=0;i<it->second.size();i++){
             int same_item=it->second[i];
 
@@ -277,22 +275,22 @@ void LR::merge(){
             }
 
             // 删除所有与same_item有关的弧
+            // 先复制一份
             map<pair<int,char>,int>g=GOTO;
-
             for(map<pair<int,char>,int>::iterator it2 = g.begin(); it2 != g.end(); it2++){
                 // 找到射出弧
                 if(it2->first.first==same_item){
                     // 删除它
                     GOTO.erase(make_pair(it2->first.first,it2->first.second));
                 }
-
                 // 找到射向弧
                 if(it2->second==same_item){
                     GOTO.erase(make_pair(it2->first.first,it2->first.second));
                 }
-
             }
 
+            // 删除项目集族
+            C.erase(C.begin()+same_item);
         }
 
     }
@@ -304,6 +302,7 @@ void LR::merge(){
         cout<<it->first.first<<" + "<<it->first.second<<" -> "<<it->second<<endl;
     }
     cout<<"--------------------------------------------------"<<endl<<endl;
+    cout<<C.size();
 
 //    for (const auto& I : C) {
 //        vector<string>s;
