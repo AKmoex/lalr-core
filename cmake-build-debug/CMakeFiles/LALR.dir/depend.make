@@ -3,11 +3,7 @@
 
 CMakeFiles/LALR.dir/LALR.cpp.obj: ../LALR.cpp
 CMakeFiles/LALR.dir/LALR.cpp.obj: ../LALR.h
-CMakeFiles/LALR.dir/LALR.cpp.obj: ../json/single_include/nlohmann/json.hpp
 
-CMakeFiles/LALR.dir/main.cpp.obj: ../cpp-httplib/httplib.h
-CMakeFiles/LALR.dir/main.cpp.obj: ../json/single_include/nlohmann/json.hpp
 CMakeFiles/LALR.dir/main.cpp.obj: ../LALR.h
-CMakeFiles/LALR.dir/main.cpp.obj: ../json/single_include/nlohmann/json.hpp
 CMakeFiles/LALR.dir/main.cpp.obj: ../main.cpp
 

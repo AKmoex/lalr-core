@@ -184,6 +184,9 @@ void LR::run() {
 
 // 构造Action、GOTO表
 void LR::build_table() {
+    // 构造DFA状态机
+    items();
+
     for (const auto& I : C) {
         vector<string>s;
         int i = &I - &C[0];
@@ -197,8 +200,7 @@ void LR::build_table() {
             cout<<res.c_str()<<endl;
         }
     }
-    // 构造DFA状态机
-    items();
+
     // 遍历每个状态(项目集)
     for (int i = 0; i < C.size(); i++) {
         const Item& item = C[i];
@@ -214,7 +216,7 @@ void LR::build_table() {
                     ACTION[make_pair(i, X)] = make_pair(SHIFT, j);
                 }
             }
-                // 。在最后
+                // .在最后
             else {
                 if (prod == Prod('^', string(1, G.prods[0].left_VN) + '.', {}) && prod.prospect == set<char>({ '#' }))  // S'->S.,# acction[i, #] = acc
                     ACTION[make_pair(i, '#')] = make_pair(ACCEPT, 0);
