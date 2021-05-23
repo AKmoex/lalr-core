@@ -36,6 +36,20 @@ public:
         if (prospect.find('#') != prospect.end()) p += string(1, i++ == 0 ? ',' : '|') + "#";
         return p;
     }
+    vector<string> displayStr2() const {
+        vector<string>v;
+        v.push_back(string(1, left_VN));
+        v.push_back(right.c_str());
+        for (const auto& c : prospect){
+            if (c != '#') {
+                v.push_back(string(1,c));
+            }
+        }
+        if (prospect.find('#') != prospect.end()){
+            v.push_back("#");
+        }
+        return v;
+    }
     set<char> prospect; // 搜索符
     static string cut(const string& in, int i, int j) {
         return string(in.begin() + i, in.begin() + j);
@@ -108,7 +122,7 @@ private:
     Item closure(Item I); // 求该项目的闭包
     Item Goto(const Item& I, char X); // 求I经过X到达的项目集
     void items(); // 求项目集状态机DFA！!
-
+    void merge();
     json j;
 public:
     void web_input(string grammars, string expression);

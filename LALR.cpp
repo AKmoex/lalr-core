@@ -19,11 +19,11 @@ Prod::Prod(const string& in) {
 
 void Item::analyse_grammar_line(const string& prod) {
 
-    // å…ˆå°†æœ€å·¦è¾¹çš„éç»ˆç»“ç¬¦åŠ å…¥
+    // ÏÈ½«×î×ó±ßµÄ·ÇÖÕ½á·û¼ÓÈë
     Vn.insert(prod[0]);
     Symbol.insert(prod[0]);
 
-    // æå–ç»ˆç»“ç¬¦ã€éç»ˆç»“ç¬¦
+    // ÌáÈ¡ÖÕ½á·û¡¢·ÇÖÕ½á·û
     for (int i = 3; i < prod.length(); i++) {
         char ch = prod[i];
         if (isupper(ch)) {
@@ -36,19 +36,19 @@ void Item::analyse_grammar_line(const string& prod) {
         }
     }
 
-    // æå–å€™é€‰å¼
+    // ÌáÈ¡ºòÑ¡Ê½
     for (int i = 3; i < prod.length(); i++) {
         int j;
         for (j = i + 1; j < prod.length() && prod[j] != '|'; j++);
         Prod p = Prod(string(1, prod[0]) + "->" + Prod::cut(prod, i, j));
-        if (find(prods.begin(), prods.end(), p) == prods.end()) // å»é‡
+        if (find(prods.begin(), prods.end(), p) == prods.end()) // È¥ÖØ
             prods.push_back(p);
         i = j;
     }
 }
 
 void LR::web_input(string grammars, string expression) {
-    // æ–‡æ³•ä¸²
+    // ÎÄ·¨´®
     string grammar_line = "";
     for (int i = 0; i < grammars.length(); i++) {
         if (grammars[i] != '\n') {
@@ -60,9 +60,9 @@ void LR::web_input(string grammars, string expression) {
             grammar_line = "";
         }
     }
-    // ç‰¹æ®Šå¤„ç†ä¸€ä¸‹æœ€åä¸€ä¸ªæ–‡æ³•å­—ç¬¦ä¸²
+    // ÌØÊâ´¦ÀíÒ»ÏÂ×îºóÒ»¸öÎÄ·¨×Ö·û´®
     G.analyse_grammar_line(grammar_line);
-    // è¡¨è¾¾å¼
+    // ±í´ïÊ½
     inStr.push_back('#');
     status.push_back(0);
     for (int i = expression.length() - 1; i >= 0; --i) {
@@ -73,16 +73,16 @@ void LR::web_input(string grammars, string expression) {
 Item LR::closure(Item I) {
     if (I.prods.size() == 0) return I;
 
-    // æšä¸¾Içš„äº§ç”Ÿå¼
+    // Ã¶¾ÙIµÄ²úÉúÊ½
     for (int i = 0; i < I.prods.size(); ++i) {
 
         Prod prod = I.prods[i];
         unsigned long pointLoc = 0;
-        if ((pointLoc = prod.right.find('.')) != string::npos && pointLoc != prod.right.length() - 1) { // æ‰¾åˆ°.ï¼ŒA->a.Bc,d
+        if ((pointLoc = prod.right.find('.')) != string::npos && pointLoc != prod.right.length() - 1) { // ÕÒµ½.£¬A->a.Bc,d
             char X = prod.right[pointLoc + 1];
-            // ç»ˆç»“ç¬¦
+            // ÖÕ½á·û
             if (G.Vt.find(X) != G.Vt.end()) {
-                if (X == '@') // @ç‰¹æ®Šå¤„ç†
+                if (X == '@') // @ÌØÊâ´¦Àí
                     swap(I.prods[i].right[pointLoc], I.prods[i].right[pointLoc + 1]);
                 continue;
             }
@@ -96,17 +96,17 @@ Item LR::closure(Item I) {
             }
 
             for (vector<Prod>::iterator it = G.prods.begin(); it != G.prods.end(); ++it) {
-                if (*it == X) { // æ‰¾åˆ°äº§ç”Ÿå¼
+                if (*it == X) { // ÕÒµ½²úÉúÊ½
                     Prod p = *it;
-                    if (p.right[0] == '@') { // ç‰¹æ®Šå¤„ç†.@ => @.
+                    if (p.right[0] == '@') { // ÌØÊâ´¦Àí.@ => @.
                         p.right = '.' + p.right;
                         swap(p.right[0], p.right[1]);
                     }
                     else
                         p.right = '.' + p.right;
 
-                    vector<Prod>::iterator Iit = find(I.prods.begin(), I.prods.end(), p); // æ‰¾Iä¸­æ˜¯å¦å­˜åœ¨äº§ç”Ÿå¼
-                    if (Iit != I.prods.end())  // æ‰¾åˆ°
+                    vector<Prod>::iterator Iit = find(I.prods.begin(), I.prods.end(), p); // ÕÒIÖĞÊÇ·ñ´æÔÚ²úÉúÊ½
+                    if (Iit != I.prods.end())  // ÕÒµ½
                         Iit->prospect.insert(ff.begin(), ff.end());
                     else {
                         p.prospect.insert(ff.begin(), ff.end());
@@ -122,10 +122,10 @@ Item LR::closure(Item I) {
 
 Item LR::Goto(const Item& I, char X) {
     Item J;
-    // é¡¹ç›®é›†ä¸ºç©ºæˆ–è€…X==@ç©ºå­—
+    // ÏîÄ¿¼¯Îª¿Õ»òÕßX==@¿Õ×Ö
     if (I.prods.size() == 0 || X == '@') return J;
 
-    // éå†Iä¸­çš„æ¯ä¸ªé¡¹ç›®
+    // ±éÀúIÖĞµÄÃ¿¸öÏîÄ¿
     for (const auto& p : I.prods) {
         string right = p.right;
         unsigned long pointLoc = right.find('.');
@@ -137,35 +137,35 @@ Item LR::Goto(const Item& I, char X) {
     return closure(J);
 }
 
-// æ±‚é¡¹ç›®é›†çŠ¶æ€æœºDFA
+// ÇóÏîÄ¿¼¯×´Ì¬»úDFA
 void LR::items() {
     Item initial;
-    // æ‹“å±•æ–‡æ³•
+    // ÍØÕ¹ÎÄ·¨
     initial.prods.push_back(Prod('^', '.' + string(1, G.prods[0].left_VN), { '#' }));
-    // æ±‚åˆçŠ¶æ€å¯¹åº”é¡¹ç›®
+    // Çó³õ×´Ì¬¶ÔÓ¦ÏîÄ¿
     C.push_back(closure(initial));
 
     int size = 0;
-    // å½“æ€»çŠ¶æ€æ•°ä¸å†å¢å¤§
+    // µ±×Ü×´Ì¬Êı²»ÔÙÔö´ó
 
     while (size != C.size()) {
         size = C.size();
-        // å¯¹å·²æœ‰æ¯ä¸ªçš„é¡¹ç›®é›†æ±‚è§£ä¼¸å‡ºä¸€æ¡å¼§åæŒ‡å‘çš„çŠ¶æ€(é¡¹ç›®é›†)
+        // ¶ÔÒÑÓĞÃ¿¸öµÄÏîÄ¿¼¯Çó½âÉì³öÒ»Ìõ»¡ºóÖ¸ÏòµÄ×´Ì¬(ÏîÄ¿¼¯)
         for (int i = 0; i < C.size(); i++) {
             Item I = C[i];
-            // æ¯ä¸ªæ–‡æ³•ç¬¦å·Xæ‰¾å‡ºä¼¸å‡ºçš„å¼§å¹¶æ±‚é¡¹ç›®
+            // Ã¿¸öÎÄ·¨·ûºÅXÕÒ³öÉì³öµÄ»¡²¢ÇóÏîÄ¿
             for (const auto& X : G.Symbol) {
                 Item next = Goto(I, X);
-                // ä¸ä¸ºç©ºæ—¶æ‰å¯ä»¥å¢åŠ åˆ°æ€»é¡¹ç›®é›†ä¸­
+                // ²»Îª¿ÕÊ±²Å¿ÉÒÔÔö¼Óµ½×ÜÏîÄ¿¼¯ÖĞ
                 if (next.prods.size() != 0) {
                     auto it = find(C.begin(), C.end(), next);
-                    // ä¸‹ä¸€çŠ¶æ€å·²ç»å­˜åœ¨
+                    // ÏÂÒ»×´Ì¬ÒÑ¾­´æÔÚ
                     if (it != C.end()) {
-                        // å¢åŠ ä¸€æ¡å¼§å³å¯
+                        // Ôö¼ÓÒ»Ìõ»¡¼´¿É
                         GOTO[make_pair(i, X)] = it - C.begin();
                     }
                     else {
-                        // æ–°å¢ä¸€ä¸ªçŠ¶æ€ï¼Œå†è¿ä¸Šå¼§çº¿
+                        // ĞÂÔöÒ»¸ö×´Ì¬£¬ÔÙÁ¬ÉÏ»¡Ïß
                         C.push_back(next);
                         GOTO[make_pair(i, X)] = C.size() - 1;
                     }
@@ -175,64 +175,138 @@ void LR::items() {
     }
 }
 
+// LALRºÏ²¢ÏîÄ¿¼¯×å
+void LR::merge(){
+    map<int,vector<int>>same;
+    set<int>skip_item;
+    for(int i=1;i<C.size();i++){
+        if(skip_item.count(i)==0){
+            cout<<endl<<"¼ì²éÏîÄ¿"<<i<<endl;
+            set<string>items_i;
+            for (const auto& p_i : C[i].prods) {
+                vector<string>v_i=p_i.displayStr2();
+                string s_i=v_i[0]+"->"+v_i[1];
+                items_i.insert(s_i);
+            }
+
+            //
+            for(int j=i+1;j<C.size();j++){
+                set<string>items_j;
+                for (const auto& p_j : C[j].prods) {
+                    vector<string>v_j=p_j.displayStr2();
+                    string s_j=v_j[0]+"->"+v_j[1];
+                    items_j.insert(s_j);
+                }
+                bool isEqual=items_i.size()==items_j.size()&&equal(items_i.begin(), items_i.end(), items_j.begin(), items_j.end());
+                if(isEqual){
+                    cout<<j<<"  ";
+                    for(auto x:items_i){
+                        cout<<x<<endl;
+                    }
+                    same[i].push_back(j);
+                    skip_item.insert(j);
+                }
+            }
+        }
+
+    }
+    // ¿´¿´Ò»¹²ÓĞ¶àÉÙÏàÍ¬Ïî
+    for(map<int,vector<int>>::iterator it = same.begin(); it != same.end(); it++){
+        cout<<it->first<<": ";
+        for(int i=0;i<it->second.size();i++){
+            int same_item=it->second[i];
+            // Ñ°ÕÒÔ­GOTO±íÖĞÓÉsame_itemÉä³öµÄ»¡
+
+            for(map<pair<int,char>,int>::iterator it2 = GOTO.begin(); it2 != GOTO.end(); it2++){
+                // ÕÒµ½¸ÃÏîÄ¿¼¯
+                if(it2->first.first==same_item){
+
+                }
+                cout<<it2->first.first<<" + "<<it2->first.second<<" -> "<<it2->second<<endl;
+            }
+
+        }
+        cout<<endl;
+    }
+
+    // ±éÀúGOTO
+    cout<<"±éÀúGOTO±í"<<endl;
+    for(map<pair<int,char>,int>::iterator it = GOTO.begin(); it != GOTO.end(); it++){
+        cout<<it->first.first<<" + "<<it->first.second<<" -> "<<it->second<<endl;
+    }
+
+//    for (const auto& I : C) {
+//        vector<string>s;
+//        int i = &I - &C[0];
+//        if(i==0){
+//            continue;
+//        }
+//        else{
+//            cout<<endl<<"ÏîÄ¿"<<i<<endl;
+//            for (const auto& p : I.prods) { // ÁĞ³öÏîÄ¿
+//                vector<string>v=p.displayStr2();
+//                cout<<v[0]<<"   "<<v[1]<<"  ";
+//                for(int m=2;m<v.size();m++){
+//                    cout<<v[m]<<",";
+//                }
+//                cout<<endl;
+//            }
+//
+//            cout<<endl<<endl;
+//        }
+//    }
+
+
+
+}
+
 void LR::run() {
     build_table();
+
     draw_graph();
+
     web_output_table();
     web_output_steps();
 }
 
-// æ„é€ Actionã€GOTOè¡¨
+// ¹¹ÔìAction¡¢GOTO±í
 void LR::build_table() {
-    // æ„é€ DFAçŠ¶æ€æœº
+    // ¹¹ÔìDFA×´Ì¬»ú
     items();
 
-    for (const auto& I : C) {
-        vector<string>s;
-        int i = &I - &C[0];
-        s.push_back(to_string(i));
-        for (const auto& p : I.prods) { // åˆ—å‡ºé¡¹ç›®
-            string res = p.displayStr();
-            if (res.find('^') != string::npos)
-                res = Prod::replaceAll(res, "^", string(1, G.prods[0].left_VN) + "'");
-            s.push_back(res.c_str());
-            cout<<endl;
-            cout<<res.c_str()<<endl;
-        }
-    }
-
-    // éå†æ¯ä¸ªçŠ¶æ€(é¡¹ç›®é›†)
+    merge();
+    // ±éÀúÃ¿¸ö×´Ì¬(ÏîÄ¿¼¯)
     for (int i = 0; i < C.size(); i++) {
         const Item& item = C[i];
-        // éå†æ¯ä¸ªäº§ç”Ÿå¼
+        // ±éÀúÃ¿¸ö²úÉúÊ½
         for (const auto& prod : item.prods) {
             unsigned long pointLoc = prod.right.find('.');
-            // åˆ¤æ–­.çš„ä½ç½®
-            // .ä¸åœ¨æœ€å
+            // ÅĞ¶Ï.µÄÎ»ÖÃ
+            // .²»ÔÚ×îºó
             if (pointLoc < prod.right.length() - 1) {
                 char X = prod.right[pointLoc + 1];
-                if (G.Vt.find(X) != G.Vt.end() && GOTO.find(make_pair(i, X)) != GOTO.end()) { // ç»ˆç»“ç¬¦
+                if (G.Vt.find(X) != G.Vt.end() && GOTO.find(make_pair(i, X)) != GOTO.end()) { // ÖÕ½á·û
                     int j = GOTO[make_pair(i, X)];
                     ACTION[make_pair(i, X)] = make_pair(SHIFT, j);
                 }
             }
-                // .åœ¨æœ€å
+                // .ÔÚ×îºó
             else {
                 if (prod == Prod('^', string(1, G.prods[0].left_VN) + '.', {}) && prod.prospect == set<char>({ '#' }))  // S'->S.,# acction[i, #] = acc
                     ACTION[make_pair(i, '#')] = make_pair(ACCEPT, 0);
                 else if (prod.left_VN != '^') {
                     string right = prod.right;
-                    right.erase(pointLoc, 1); // åˆ é™¤.
-                    for (const auto& X : prod.prospect) { // A->a.,bï¼Œæšä¸¾b
+                    right.erase(pointLoc, 1); // É¾³ı.
+                    for (const auto& X : prod.prospect) { // A->a.,b£¬Ã¶¾Ùb
                         vector<Prod>::iterator it = find(G.prods.begin(), G.prods.end(), Prod(prod.left_VN, right, set<char>{}));
-                        if (it != G.prods.end())  // æ‰¾åˆ°äº†
+                        if (it != G.prods.end())  // ÕÒµ½ÁË
                             ACTION[make_pair(i, X)] = make_pair(REDUCE, it - G.prods.begin());
                     }
                 }
             }
         }
     }
-    if (G.Vt.find('@') != G.Vt.end()) { // åˆ é™¤@ï¼Œç§»è¿›#
+    if (G.Vt.find('@') != G.Vt.end()) { // É¾³ı@£¬ÒÆ½ø#
         G.Vt.erase(G.Vt.find('@'));
         G.Symbol.erase(G.Symbol.find('@'));
     }
@@ -240,20 +314,20 @@ void LR::build_table() {
     G.Symbol.insert('#');
 }
 
-set<char> LR::first(const string& s) { // sä¸ä¸ºäº§ç”Ÿå¼ï¼
+set<char> LR::first(const string& s) { // s²»Îª²úÉúÊ½£¡
     if (s.length() == 0)
         return set<char>({ '@' });
     else if (s.length() == 1) {
-        if (G.Vt.find(s[0]) != G.Vt.end() || s[0] == '#') // ç»ˆç»“ç¬¦
+        if (G.Vt.find(s[0]) != G.Vt.end() || s[0] == '#') // ÖÕ½á·û
             return set<char>({ s[0] });
         else
         if (FIRST[s[0]].size() != 0) return FIRST[s[0]];
         else {
             for (vector<Prod>::iterator it = G.prods.begin(); it != G.prods.end(); ++it)
                 if (*it == s[0]) {
-                    // é˜²æ­¢ç›´æ¥å·¦é€’å½’
+                    // ·ÀÖ¹Ö±½Ó×óµİ¹é
                     int xPos = it->right.find(it->left_VN);
-                    if (xPos != string::npos) { // æ‰¾åˆ°X->aXb
+                    if (xPos != string::npos) { // ÕÒµ½X->aXb
                         if (xPos == 0) continue; // X->Xb
                         else { // X->aXb
                             string a = Prod::cut(it->right, 0, xPos);
@@ -271,12 +345,12 @@ set<char> LR::first(const string& s) { // sä¸ä¸ºäº§ç”Ÿå¼ï¼
     else { // first(X1X2X3X4)...
         set<char> ret;
         for (unsigned int i = 0; i < s.length(); ++i) {
-            set<char> f = first(string(1, s[i])); // é€ä¸ªç¬¦å·æ±‚first(Xi)é›†
-            if (f.find('@') != f.end() && s.length() - 1 != i) { // å‘ç°@
-                f.erase(f.find('@')); // å‡å»@
-                ret.insert(f.begin(), f.end()); // æ”¾å…¥firsté›†åˆ
+            set<char> f = first(string(1, s[i])); // Öğ¸ö·ûºÅÇófirst(Xi)¼¯
+            if (f.find('@') != f.end() && s.length() - 1 != i) { // ·¢ÏÖ@
+                f.erase(f.find('@')); // ¼õÈ¥@
+                ret.insert(f.begin(), f.end()); // ·ÅÈëfirst¼¯ºÏ
             }
-            else { // æ— @æˆ–è€…æœ€åä¸€ä¸ªXiï¼Œåˆ™ä¸éœ€è¦æ±‚ä¸‹å»äº†
+            else { // ÎŞ@»òÕß×îºóÒ»¸öXi£¬Ôò²»ĞèÒªÇóÏÂÈ¥ÁË
                 ret.insert(f.begin(), f.end());
                 break;
             }
@@ -286,22 +360,22 @@ set<char> LR::first(const string& s) { // sä¸ä¸ºäº§ç”Ÿå¼ï¼
 }
 
 void LR::follow() {
-    FOLLOW[G.prods[0].left_VN].insert('#'); // å¼€å§‹ç¬¦å·æ”¾'#'
-    for (auto pp : G.prods) { // ç›´åˆ°follow(X)ä¸åœ¨å¢å¤§
+    FOLLOW[G.prods[0].left_VN].insert('#'); // ¿ªÊ¼·ûºÅ·Å'#'
+    for (auto pp : G.prods) { // Ö±µ½follow(X)²»ÔÚÔö´ó
         unsigned int size = 0;
         while (size != FOLLOW[pp.left_VN].size()) {
             size = FOLLOW[pp.left_VN].size();
-            for (auto prod : G.prods) { // æ±‚å‡ºæ‰€æœ‰éç»ˆç»“ç¬¦çš„followé›†åˆ
+            for (auto prod : G.prods) { // Çó³öËùÓĞ·ÇÖÕ½á·ûµÄfollow¼¯ºÏ
                 char X = prod.left_VN;
-                for (auto p : G.prods) {// æ±‚å‡ºXçš„followé›†åˆ
+                for (auto p : G.prods) {// Çó³öXµÄfollow¼¯ºÏ
                     string s = p.right;
                     unsigned long loc = 0;
-                    if ((loc = s.find(X)) != string::npos) { // æ‰¾åˆ°éç»ˆç»“ç¬¦X
-                        set<char> f = first(string(s.begin() + loc + 1, s.end())); // æ±‚first(b)
-                        FOLLOW[X].insert(f.begin(), f.end()); // åŠ å…¥åˆ°follow(X)ä¸­
-                        if (f.find('@') != f.end()) {// æ‰¾åˆ°@
-                            FOLLOW[X].erase(FOLLOW[X].find('@')); // åˆ é™¤@
-                            set<char> fw = FOLLOW[p.left_VN]; // æŠŠfollow(A)æ”¾å…¥follow(X)
+                    if ((loc = s.find(X)) != string::npos) { // ÕÒµ½·ÇÖÕ½á·ûX
+                        set<char> f = first(string(s.begin() + loc + 1, s.end())); // Çófirst(b)
+                        FOLLOW[X].insert(f.begin(), f.end()); // ¼ÓÈëµ½follow(X)ÖĞ
+                        if (f.find('@') != f.end()) {// ÕÒµ½@
+                            FOLLOW[X].erase(FOLLOW[X].find('@')); // É¾³ı@
+                            set<char> fw = FOLLOW[p.left_VN]; // °Ñfollow(A)·ÅÈëfollow(X)
                             FOLLOW[X].insert(fw.begin(), fw.end());
                         }
                     }
@@ -321,14 +395,14 @@ string Prod::replaceAll(const string& in, const string from, const string to) {
 
 void LR::draw_graph() {
 
-    // ç”»èŠ‚ç‚¹
-    // éå†é¡¹ç›®é›†
+    // »­½Úµã
+    // ±éÀúÏîÄ¿¼¯
     j["n"];
     for (const auto& I : C) {
         vector<string>s;
         int i = &I - &C[0];
         s.push_back(to_string(i));
-        for (const auto& p : I.prods) { // åˆ—å‡ºé¡¹ç›®
+        for (const auto& p : I.prods) { // ÁĞ³öÏîÄ¿
             string res = p.displayStr();
             if (res.find('^') != string::npos)
                 res = Prod::replaceAll(res, "^", string(1, G.prods[0].left_VN) + "'");
@@ -339,13 +413,13 @@ void LR::draw_graph() {
     }
 
 
-    // çŠ¶æ€èŠ‚ç‚¹
+    // ×´Ì¬½Úµã
     for (const auto& I : C) {
         int i = &I - &C[0];
         j["nodes"].push_back(i);
     }
 
-    // çŠ¶æ€è¾¹
+    // ×´Ì¬±ß
     for (const auto& link : GOTO) {
         int i = link.first.first;
         int jj = link.second;
@@ -357,7 +431,7 @@ void LR::draw_graph() {
 }
 
 void LR::web_output_table() {
-    // ç»ˆç»“ç¬¦
+    // ÖÕ½á·û
     for (auto vt : G.Vt) {
         if (vt != '#') {
             j["VT"].push_back(string(1, vt));
@@ -365,21 +439,21 @@ void LR::web_output_table() {
     }
     j["VT"].push_back(string(1, '#'));
 
-    // éç»ˆç»“ç¬¦
+    // ·ÇÖÕ½á·û
     for (auto vn : G.Vn) {
         j["VN"].push_back(string(1, vn));
     }
 
-    // è¡¨
+    // ±í
     for (int i = 0; i < C.size(); i++) {
 
         vector<string>one_tb;
 
-        // å¯¹äºæ™®é€šç»ˆç»“ç¬¦
+        // ¶ÔÓÚÆÕÍ¨ÖÕ½á·û
         for (const auto& X : G.Vt) {
             if (X != '#') {
                 pair<int, char> p = make_pair(i, X);
-                // å­˜åœ¨è¿™ä¸€é¡¹
+                // ´æÔÚÕâÒ»Ïî
                 if (ACTION.find(p) != ACTION.end()) {
                     pair<actionStat, int> res = ACTION[p];
                     string second=to_string(res.second);
@@ -391,9 +465,9 @@ void LR::web_output_table() {
                 }
             }
         }
-        // #ç»Ÿä¸€æ”¾åœ¨æœ€å
+        // #Í³Ò»·ÅÔÚ×îºó
         pair<int, char> p = make_pair(i, '#');
-        // æ‰¾åˆ°äº†
+        // ÕÒµ½ÁË
         if (ACTION.find(p) != ACTION.end()) {
             pair<actionStat, int> res = ACTION[p];
             string str=actionStatStr[res.first];
@@ -407,7 +481,7 @@ void LR::web_output_table() {
         }
 
 
-        // å¯¹äºéç»ˆç»“ç¬¦
+        // ¶ÔÓÚ·ÇÖÕ½á·û
         for (const auto& X : G.Vn) {
             pair<int, char> p = make_pair(i, X);
             string str = "";
@@ -424,26 +498,26 @@ void LR::web_output_table() {
 
 void LR::web_output_steps() {
     bool success = false;
-    // å…ˆå°†#å…¥åˆ†ææ ˆ
-    // ä¸åŠ å…¶å®ä¹Ÿæ²¡å…³ç³»
+    // ÏÈ½«#Èë·ÖÎöÕ»
+    // ²»¼ÓÆäÊµÒ²Ã»¹ØÏµ
     parse.push_back('#');
     while (!success) {
         vector<string>one_step;
-        // çŠ¶æ€æ ˆ
+        // ×´Ì¬Õ»
         string status_string = "";
         for (int i = 0; i < status.size();i++) {
             status_string += to_string(status[i]);
         }
         one_step.push_back(status_string);
 
-        // åˆ†ææ ˆ
+        // ·ÖÎöÕ»
         string analyse_string = "";
         for (int i = 0; i < parse.size(); i++) {
             analyse_string += string(1, parse[i]);
         }
         one_step.push_back(analyse_string);
 
-        // è¾“å…¥ä¸²
+        // ÊäÈë´®
         string expression_string = "";
         for (int i = inStr.size() - 1; i >= 0; i--) {
             expression_string+= string(1, inStr[i]);
@@ -451,12 +525,12 @@ void LR::web_output_steps() {
         one_step.push_back(expression_string);
 
 
-        // åˆ†åˆ«å–åˆ†ææ ˆå’Œè¾“å…¥ä¸²æ ˆé¡¶
+        // ·Ö±ğÈ¡·ÖÎöÕ»ºÍÊäÈë´®Õ»¶¥
         int sTop = status.size() - 1;
         int iTop = inStr.size() - 1;
         pair<int, char> p = make_pair(status[sTop], inStr[iTop]);
 
-        // å‡ºé”™,ç»“æŸ
+        // ³ö´í,½áÊø
         if (ACTION.find(p) == ACTION.end()) {
             one_step.push_back("ERROR");
             j["Process"].push_back(one_step);
@@ -465,7 +539,7 @@ void LR::web_output_steps() {
 
         pair<actionStat, int> act = ACTION[p];
 
-        // ç§»è¿›
+        // ÒÆ½ø
         if (act.first == SHIFT) {
 
             string s = "ACTION[";
@@ -479,12 +553,12 @@ void LR::web_output_steps() {
             inStr.pop_back();
             one_step.push_back(s);
         }
-            // å½’çº¦
+            // ¹éÔ¼
         else if (act.first == REDUCE) {
             string s = "r" + to_string(act.second) + ":";
             Prod p = G.prods[act.second];
             s += string(1, p.left_VN) + "->" + p.right + " Reduce, GOTO(" + to_string(status[status.size() - 1]) + "," + string(1, p.left_VN) + ")=";
-            // ç©ºä¸²ï¼Œæ— éœ€å‡ºæ ˆï¼Œç›´æ¥è§„çº¦
+            // ¿Õ´®£¬ÎŞĞè³öÕ»£¬Ö±½Ó¹æÔ¼
             if (p.right != "@") {
                 for (unsigned i = 0; i < p.right.size(); ++i) {
                     status.pop_back();
@@ -497,7 +571,7 @@ void LR::web_output_steps() {
             one_step.push_back(s);
 
         }
-            // æ¥å—
+            // ½ÓÊÜ
         else if (act.first == ACCEPT) {
             success = true;
             string s = "acc,Success";

@@ -20,7 +20,9 @@ int main() {
 
         LR lr;
         //lr.web_input(grammar, expression);
-        lr.web_input("E->E+T\nE->T\nT->T*F\nT->F\nF->(E)\nF->i","i+i*i");
+        //lr.web_input("E->E+T\nE->T\nT->T*F\nT->F\nF->(E)\nF->i","i+i*i");
+        lr.web_input("S->L=R\nS->R\nL->*R\nL->x\nR->L","i+i*i");
+
         lr.run();
         string data = lr.get_data();
         res.set_content(data, "application/json");
