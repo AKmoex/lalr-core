@@ -129,17 +129,44 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named lalr_core
+# Target rules for targets named LALR
 
 # Build rule for target.
-lalr_core: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 lalr_core
-.PHONY : lalr_core
+LALR: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 LALR
+.PHONY : LALR
 
 # fast build rule for target.
-lalr_core/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\lalr_core.dir\build.make CMakeFiles/lalr_core.dir/build
-.PHONY : lalr_core/fast
+LALR/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/build
+.PHONY : LALR/fast
+
+LALR.obj: LALR.cpp.obj
+
+.PHONY : LALR.obj
+
+# target to build an object file
+LALR.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LALR.cpp.obj
+.PHONY : LALR.cpp.obj
+
+LALR.i: LALR.cpp.i
+
+.PHONY : LALR.i
+
+# target to preprocess a source file
+LALR.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LALR.cpp.i
+.PHONY : LALR.cpp.i
+
+LALR.s: LALR.cpp.s
+
+.PHONY : LALR.s
+
+# target to generate assembly for a file
+LALR.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LALR.cpp.s
+.PHONY : LALR.cpp.s
 
 main.obj: main.cpp.obj
 
@@ -147,7 +174,7 @@ main.obj: main.cpp.obj
 
 # target to build an object file
 main.cpp.obj:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\lalr_core.dir\build.make CMakeFiles/lalr_core.dir/main.cpp.obj
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/main.cpp.obj
 .PHONY : main.cpp.obj
 
 main.i: main.cpp.i
@@ -156,7 +183,7 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\lalr_core.dir\build.make CMakeFiles/lalr_core.dir/main.cpp.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -165,7 +192,7 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles\lalr_core.dir\build.make CMakeFiles/lalr_core.dir/main.cpp.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/main.cpp.s
 .PHONY : main.cpp.s
 
 # Help Target
@@ -176,7 +203,10 @@ help:
 	@echo ... depend
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... lalr_core
+	@echo ... LALR
+	@echo ... LALR.obj
+	@echo ... LALR.i
+	@echo ... LALR.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

@@ -1,0 +1,3 @@
+C:\Users\AKmoex\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -E rm -f CMakeFiles\LALR.dir/objects.a
+C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\ar.exe cr CMakeFiles\LALR.dir/objects.a @CMakeFiles\LALR.dir\objects1.rsp
+C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE -g -Wl,--whole-archive CMakeFiles\LALR.dir/objects.a -Wl,--no-whole-archive -o LALR.exe -Wl,--out-implib,libLALR.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\LALR.dir\linklibs.rsp

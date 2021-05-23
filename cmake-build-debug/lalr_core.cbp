@@ -80,6 +80,12 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/LALR.cpp">
+			<Option target="lalr_core"/>
+		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/LALR.h">
+			<Option target="lalr_core"/>
+		</Unit>
 		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/main.cpp">
 			<Option target="lalr_core"/>
 		</Unit>
