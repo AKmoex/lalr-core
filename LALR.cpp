@@ -48,10 +48,14 @@ void Item::analyse_grammar_line(const string& prod) {
 }
 
 void LR::web_input(string grammars, string expression) {
+    G.Vt.clear();
+    G.Vn.clear();
+    G.Symbol.clear();
     cout<<"看看非终结符"<<endl;
     for (auto vn : G.Vn) {
        cout<<vn<<endl;
     }
+    cout<<"看看非终结符"<<G.prods.size()<<endl;
     // 文法串
     string grammar_line = "";
     for (int i = 0; i < grammars.length(); i++) {
@@ -314,6 +318,8 @@ void LR::merge(){
                     GOTO.erase(make_pair(it2->first.first,it2->first.second));
                 }
             }
+
+            // 合并展望符
 
             // 删除项目集族
             // 提取出来单独处理
