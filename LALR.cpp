@@ -51,11 +51,7 @@ void LR::web_input(string grammars, string expression) {
     G.Vt.clear();
     G.Vn.clear();
     G.Symbol.clear();
-    cout<<"看看非终结符"<<endl;
-    for (auto vn : G.Vn) {
-       cout<<vn<<endl;
-    }
-    cout<<"看看非终结符"<<G.prods.size()<<endl;
+
     // 文法串
     string grammar_line = "";
     for (int i = 0; i < grammars.length(); i++) {
@@ -75,10 +71,6 @@ void LR::web_input(string grammars, string expression) {
     status.push_back(0);
     for (int i = expression.length() - 1; i >= 0; --i) {
         inStr.push_back(expression[i]);
-    }
-    cout<<"看看非终结符"<<endl;
-    for (auto vn : G.Vn) {
-        cout<<vn<<endl;
     }
 }
 
@@ -154,6 +146,7 @@ void LR::items() {
     Item initial;
     // 拓展文法
     initial.prods.push_back(Prod('^', '.' + string(1, G.prods[0].left_VN), { '#' }));
+
     // 求初状态对应项目
     C.push_back(closure(initial));
 
@@ -190,24 +183,20 @@ void LR::items() {
 // LALR合并项目集族
 void LR::merge(){
 
-    // 遍历项目集族
-//    cout<<"--------------------------------------------------"<<endl<<endl;
-//    for (const auto& I : C) {
-//        vector<string>s;
-//        int i = &I - &C[0];
-//        cout<<endl<<"项目"<<i<<endl;
-//        for (const auto& p : I.prods) { // 列出项目
-//            vector<string>v=p.displayStr2();
-//            cout<<v[0]<<"   "<<v[1]<<"  ";
-//            for(int m=2;m<v.size();m++){
-//                cout<<v[m]<<",";
-//            }
-//            cout<<endl;
-//        }
-//        cout<<endl<<endl;
-//    }
+    cout<<"项目集族内容--------------------------"<<endl;
 
-    cout<<"--------------------------------------------------"<<endl<<endl;
+    for (const auto& I : C) {
+        int i = &I - &C[0];
+        cout<<i<<endl;
+        for (const auto& p : I.prods) { // 列出项目
+            string res = p.displayStr();
+             cout<<res<<endl;
+
+        }
+        cout<<endl;
+    }
+
+
     // 遍历GOTO
     cout<<"遍历GOTO表"<<endl;
     for(map<pair<int,char>,int>::iterator it = GOTO.begin(); it != GOTO.end(); it++){
@@ -250,11 +239,6 @@ void LR::merge(){
 
     }
 
-    cout<<"输出跳过符-----------------------------------------"<<endl<<endl;
-    for(auto x:skip_item){
-        cout<<x<<endl;
-    }
-
 
     map<int,int>ys;
     int dd=0;
@@ -273,6 +257,23 @@ void LR::merge(){
         cout<<it->first<<":";
         for(int i=0;i<it->second.size();i++){
             int same_item=it->second[i];
+            vector<Prod>ps=C[same_item].prods;
+            for(auto p:ps){
+                // 寻找对应产生式
+                int yj=0;
+                for(int j=0;j<C[it->first].prods.size();j++){
+                    if(C[it->first].prods[j]==p){
+                        yj=j;
+                        break;
+                    }
+                }
+                for(auto pp:p.prospect){
+
+                    if(C[it->first].prods[yj].prospect.count(pp)==0){
+                        C[it->first].prods[yj].prospect.insert(pp);
+                    }
+                }
+            }
 
             // 寻找原GOTO表中由same_item射出的弧
             for(map<pair<int,char>,int>::iterator it2 = GOTO.begin(); it2 != GOTO.end(); it2++){
@@ -379,7 +380,18 @@ void LR::merge(){
 //        }
 //    }
 
+    cout<<"项目集族内容--------------------------"<<endl;
 
+    for (const auto& I : C) {
+        int i = &I - &C[0];
+        cout<<i<<endl;
+        for (const auto& p : I.prods) { // 列出项目
+            string res = p.displayStr();
+            cout<<res<<endl;
+
+        }
+        cout<<endl;
+    }
 
 }
 
@@ -547,9 +559,16 @@ void LR::draw_graph() {
     for (const auto& link : GOTO) {
         int i = link.first.first;
         int jj = link.second;
-        vector<int>edge;
-        edge.push_back(i);
-        edge.push_back(jj);
+        char ch=link.first.second;
+
+        string s1=to_string(i);
+        string s2=to_string(jj);
+        string s3=string(1,ch);
+
+        vector<string>edge;
+        edge.push_back(s1);
+        edge.push_back(s2);
+        edge.push_back(s3);
         j["edges"].push_back(edge);
     }
 }
