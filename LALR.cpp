@@ -48,6 +48,10 @@ void Item::analyse_grammar_line(const string& prod) {
 }
 
 void LR::web_input(string grammars, string expression) {
+    cout<<"看看非终结符"<<endl;
+    for (auto vn : G.Vn) {
+       cout<<vn<<endl;
+    }
     // 文法串
     string grammar_line = "";
     for (int i = 0; i < grammars.length(); i++) {
@@ -67,6 +71,10 @@ void LR::web_input(string grammars, string expression) {
     status.push_back(0);
     for (int i = expression.length() - 1; i >= 0; --i) {
         inStr.push_back(expression[i]);
+    }
+    cout<<"看看非终结符"<<endl;
+    for (auto vn : G.Vn) {
+        cout<<vn<<endl;
     }
 }
 
@@ -238,7 +246,25 @@ void LR::merge(){
 
     }
 
-    // 看看一共有多少相同项
+    cout<<"输出跳过符-----------------------------------------"<<endl<<endl;
+    for(auto x:skip_item){
+        cout<<x<<endl;
+    }
+
+
+    map<int,int>ys;
+    int dd=0;
+    for(int d=0;d<C.size();d++){
+        if(skip_item.count(d)==1){
+            continue;
+        }
+        else{
+            ys[d]=dd;
+            dd++;
+        }
+    }
+
+
     for(map<int,vector<int>>::iterator it = same.begin(); it != same.end(); it++){
         cout<<it->first<<":";
         for(int i=0;i<it->second.size();i++){
@@ -290,10 +316,32 @@ void LR::merge(){
             }
 
             // 删除项目集族
-            C.erase(C.begin()+same_item);
+            // 提取出来单独处理
+            //swap(*(begin(C)+same_item),*(end(C)-1));
+            //C.pop_back();
         }
 
     }
+
+
+    // 删除多余的项目集族
+    int delete_item_nums=0;
+    for(auto x:skip_item){
+        C.erase(C.begin()+x-delete_item_nums);
+        delete_item_nums++;
+    }
+    // 更改GOTO表的映射关系
+    map<pair<int,char>,int>gg=GOTO;
+    for(map<pair<int,char>,int>::iterator it = gg.begin(); it != gg.end(); it++){
+        int x=it->first.first;
+        char ch=it->first.second;
+        int y=it->second;
+
+        GOTO.erase(make_pair(it->first.first,it->first.second));
+
+        GOTO[make_pair(ys[x],ch)]=ys[y];
+    }
+
 
     cout<<"--------------------------------------------------"<<endl<<endl;
     // 遍历GOTO
@@ -331,7 +379,7 @@ void LR::merge(){
 
 void LR::run() {
     build_table();
-    return ;
+
     draw_graph();
 
     web_output_table();
@@ -344,7 +392,7 @@ void LR::build_table() {
     items();
 
     merge();
-    return ;
+
     // 遍历每个状态(项目集)
     for (int i = 0; i < C.size(); i++) {
         const Item& item = C[i];
