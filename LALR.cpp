@@ -543,7 +543,6 @@ void LR::draw_graph() {
             if (res.find('^') != string::npos)
                 res = Prod::replaceAll(res, "^", string(1, G.prods[0].left_VN) + "'");
             s.push_back(res.c_str());
-
         }
         j["n"].push_back(s);
     }
@@ -646,6 +645,7 @@ void LR::web_output_steps() {
     parse.push_back('#');
     while (!success) {
         vector<string>one_step;
+        vector<string>tree_node;
         // 状态栈
         string status_string = "";
         for (int i = 0; i < status.size();i++) {
@@ -684,12 +684,16 @@ void LR::web_output_steps() {
 
         // 移进
         if (act.first == SHIFT) {
+            // 移进，给出树节点
+            tree_node.push_back("s");
+            tree_node.push_back(string(1, p.second));
 
             string s = "ACTION[";
             s += to_string(p.first) + ",";
             s += string(1, p.second) + "]=S";
             s += to_string(act.second) + ",";
             s += " Status" + to_string(act.second) + "into Stack";
+
 
             status.push_back(act.second);
             parse.push_back(inStr[iTop]);
@@ -698,9 +702,17 @@ void LR::web_output_steps() {
         }
             // 归约
         else if (act.first == REDUCE) {
+
+
             string s = "r" + to_string(act.second) + ":";
             Prod p = G.prods[act.second];
             s += string(1, p.left_VN) + "->" + p.right + " Reduce, GOTO(" + to_string(status[status.size() - 1]) + "," + string(1, p.left_VN) + ")=";
+
+            // 归约，给出语法树中父子节点
+            tree_node.push_back("r");
+            tree_node.push_back(p.right);
+            tree_node.push_back(string(1, p.left_VN));
+
             // 空串，无需出栈，直接规约
             if (p.right != "@") {
                 for (unsigned i = 0; i < p.right.size(); ++i) {
@@ -721,6 +733,8 @@ void LR::web_output_steps() {
             one_step.push_back(s);
         }
         j["Process"].push_back(one_step);
+        j["Tree"].push_back(tree_node);
+
     }
 }
 
