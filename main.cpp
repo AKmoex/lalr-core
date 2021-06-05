@@ -18,13 +18,13 @@ int main() {
 
         //LR lr;
         //ClassName *object=new ClassName(param);
-        LR lr;
-        lr.web_input(grammar, expression);
+        LALR lalr;
+        lalr.web_input(grammar, expression);
         //lr.web_input("E->E+T\nE->T\nT->T*F\nT->F\nF->(E)\nF->i","i+i*i");
         //lr->web_input("S->L=R\nS->R\nL->*R\nL->x\nR->L","i+i*i");
 
-        lr.run();
-        string data = lr.get_data();
+        lalr.run();
+        string data = lalr.get_data();
         
 
         res.set_content(data, "application/json");

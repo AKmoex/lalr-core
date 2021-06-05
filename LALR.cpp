@@ -6,7 +6,7 @@
 set<char>Item::Vn;
 set<char>Item::Vt;
 set<char>Item::Symbol;
-const char* LR::actionStatStr[] = {
+const char* LALR::actionStatStr[] = {
         "acc",
         "s",
         "r"
@@ -47,7 +47,7 @@ void Item::analyse_grammar_line(const string& prod) {
     }
 }
 
-void LR::web_input(string grammars, string expression) {
+void LALR::web_input(string grammars, string expression) {
     G.Vt.clear();
     G.Vn.clear();
     G.Symbol.clear();
@@ -74,7 +74,7 @@ void LR::web_input(string grammars, string expression) {
     }
 }
 
-Item LR::closure(Item I) {
+Item LALR::closure(Item I) {
     if (I.prods.size() == 0) return I;
 
     // 枚举I的产生式
@@ -124,7 +124,7 @@ Item LR::closure(Item I) {
     return I;
 }
 
-Item LR::Goto(const Item& I, char X) {
+Item LALR::Goto(const Item& I, char X) {
     Item J;
     // 项目集为空或者X==@空字
     if (I.prods.size() == 0 || X == '@') return J;
@@ -142,7 +142,7 @@ Item LR::Goto(const Item& I, char X) {
 }
 
 // 求项目集状态机DFA
-void LR::items() {
+void LALR::items() {
     Item initial;
     // 拓展文法
     initial.prods.push_back(Prod('^', '.' + string(1, G.prods[0].left_VN), { '#' }));
@@ -181,10 +181,15 @@ void LR::items() {
 }
 
 // LALR合并项目集族
-void LR::merge(){
+void LALR::merge(){
 
+    // 复制一份
+    vector<Item> C_copy;
+    C_copy.assign(C.begin(), C.end());
+    map<pair<int, char>, int> GOTO_copy=GOTO;
+
+    // 打印合并前的项目集族
     cout<<"项目集族内容--------------------------"<<endl;
-
     for (const auto& I : C) {
         int i = &I - &C[0];
         cout<<i<<endl;
@@ -196,20 +201,29 @@ void LR::merge(){
         cout<<endl;
     }
 
-
-    // 遍历GOTO
+    // 打印合并前的GOTO表
     cout<<"遍历GOTO表"<<endl;
     for(map<pair<int,char>,int>::iterator it = GOTO.begin(); it != GOTO.end(); it++){
         cout<<it->first.first<<" + "<<it->first.second<<" -> "<<it->second<<endl;
     }
     cout<<"--------------------------------------------------"<<endl<<endl;
 
-
+    // same字典中记录的是同心集族
+    // 如 1：2、8、9
+    // 则说明和1同心的有 2、8、9
     map<int,vector<int>>same;
+
+    // skip_item集合表示需要跳过集族（不需要处理它，直接跳过）
+    // 比如上面的 2、8、9
     set<int>skip_item;
+
+    // 遍历每个集族，找出所有的同心集族
     for(int i=1;i<C.size();i++){
+        // 判断是否需要跳过
         if(skip_item.count(i)==0){
+            // 若不需要跳过，则检查它
             cout<<endl<<"检查项目"<<i<<endl;
+            // 记录集族i的每个产生式
             set<string>items_i;
             for (const auto& p_i : C[i].prods) {
                 vector<string>v_i=p_i.displayStr2();
@@ -217,21 +231,26 @@ void LR::merge(){
                 items_i.insert(s_i);
             }
 
-            //
+            // 检查集族i后面的集族，判断是否存在同心的
             for(int j=i+1;j<C.size();j++){
+                // 得到每个产生式
                 set<string>items_j;
                 for (const auto& p_j : C[j].prods) {
                     vector<string>v_j=p_j.displayStr2();
                     string s_j=v_j[0]+"->"+v_j[1];
                     items_j.insert(s_j);
                 }
+                // 比较集族i的产生式和集族j的产生式是否相同
                 bool isEqual=items_i.size()==items_j.size()&&equal(items_i.begin(), items_i.end(), items_j.begin(), items_j.end());
+                // 若相同，则表明集族i和集族j同心
                 if(isEqual){
                     cout<<j<<"  ";
                     for(auto x:items_i){
                         cout<<x<<endl;
                     }
+                    // 更新same[i]
                     same[i].push_back(j);
+                    // 同时将集族j添加至skip_item中，表明需要跳过
                     skip_item.insert(j);
                 }
             }
@@ -239,7 +258,8 @@ void LR::merge(){
 
     }
 
-
+    // 建立映射关系，将新的项目集族和1、2、3、4.。。。。。。建立映射
+    // 这里主要是为了解决 前端画状态图
     map<int,int>ys;
     int dd=0;
     for(int d=0;d<C.size();d++){
@@ -252,12 +272,15 @@ void LR::merge(){
         }
     }
 
+    // 下面是正式的合并操作
 
     for(map<int,vector<int>>::iterator it = same.begin(); it != same.end(); it++){
         cout<<it->first<<":";
         for(int i=0;i<it->second.size();i++){
+
             int same_item=it->second[i];
             vector<Prod>ps=C[same_item].prods;
+            // 处理展望符
             for(auto p:ps){
                 // 寻找对应产生式
                 int yj=0;
@@ -267,9 +290,10 @@ void LR::merge(){
                         break;
                     }
                 }
+                // 遍历展望符集合，判断是否需要添加进来
                 for(auto pp:p.prospect){
-
                     if(C[it->first].prods[yj].prospect.count(pp)==0){
+                        // 将需要添加的展望符添加进来
                         C[it->first].prods[yj].prospect.insert(pp);
                     }
                 }
@@ -280,7 +304,8 @@ void LR::merge(){
                 // 找到射出弧
                 if(it2->first.first==same_item){
                     // 判断射出弧的终点是否是合并后的自身项目集
-                    // false代表不是自身
+                    // 这里需要判断一下终点是不是合并后的自身
+                    // true表示自身
                     bool zhong=false;
                     for(int zz=0;zz<it->second.size();zz++){
                         if(it2->second==it->second[zz]){
@@ -289,9 +314,12 @@ void LR::merge(){
                     }
                     // 终点是自身
                     if(zhong){
+                        // 指向自己就可以
                         GOTO[make_pair(it->first,it2->first.second)]=it->first;
                     }
+                    // 终点不是自身
                     else{
+                        // 修改指向
                         GOTO[make_pair(it->first,it2->first.second)]=it2->second;
                     }
                 }
@@ -301,6 +329,7 @@ void LR::merge(){
             for(map<pair<int,char>,int>::iterator it2 = GOTO.begin(); it2 != GOTO.end(); it2++){
                 // 找到射向弧
                 if(it2->second==same_item){
+                    // 全部射向 same字典 对应的键
                     GOTO[make_pair(it2->first.first,it2->first.second)]=it->first;
                 }
             }
@@ -393,9 +422,55 @@ void LR::merge(){
         cout<<endl;
     }
 
+
+    // 检验是否是LALR
+    for(int i=0;i<C.size();i++){
+            // 保存归约项目
+            vector<string>ps;
+            // 找出所有归约项目
+            for (const auto& p_i : C[i].prods) {
+                vector<string>v_i=p_i.displayStr2();
+                string s_i=v_i[0]+"->"+v_i[1];
+                cout<<s_i<<endl;
+                // 该项目是归约项目
+                if(s_i[s_i.length()-1]=='.'){
+                    // 秩序记录箭头后面的内容就可以了
+                    ps.push_back(v_i[1]);
+                    cout<<s_i<<endl;
+                }
+
+                // 归约项目数目小于等于1，则不可能存在归于-归约错误
+                if(ps.size()<=1){
+                    continue;
+                }
+
+                set<string>ps_set;
+                copy(ps.begin(), ps.end(), inserter(ps_set, ps_set.begin()));
+                // 如果vector和set的大小不等，则说明有重复项目
+                // 即存在归约-归约错误，则改用LR1方法进行分析
+                if(ps.size()!=ps_set.size()){
+                    // 改用LR1分析法分析
+                    // 恢复项目集族、GOTO表、ACTION表
+
+                    C.clear();
+                    C.assign(C_copy.begin(), C_copy.end());
+                    cout<<C.size()<<endl;
+                    GOTO=GOTO_copy;
+                    cout<<"用LR1分析"<<endl;
+                }
+
+            }
+
+
+
+
+
+
+    }
+
 }
 
-void LR::run() {
+void LALR::run() {
     build_table();
 
     draw_graph();
@@ -405,10 +480,11 @@ void LR::run() {
 }
 
 // 构造Action、GOTO表
-void LR::build_table() {
+void LALR::build_table() {
     // 构造DFA状态机
     items();
 
+    //合并项目集族
     merge();
 
     // 遍历每个状态(项目集)
@@ -450,7 +526,7 @@ void LR::build_table() {
     G.Symbol.insert('#');
 }
 
-set<char> LR::first(const string& s) { // s不为产生式！
+set<char> LALR::first(const string& s) { // s不为产生式！
     if (s.length() == 0)
         return set<char>({ '@' });
     else if (s.length() == 1) {
@@ -495,7 +571,7 @@ set<char> LR::first(const string& s) { // s不为产生式！
     }
 }
 
-void LR::follow() {
+void LALR::follow() {
     FOLLOW[G.prods[0].left_VN].insert('#'); // 开始符号放'#'
     for (auto pp : G.prods) { // 直到follow(X)不在增大
         unsigned int size = 0;
@@ -529,7 +605,7 @@ string Prod::replaceAll(const string& in, const string from, const string to) {
     return res;
 }
 
-void LR::draw_graph() {
+void LALR::draw_graph() {
 
     // 画节点
     // 遍历项目集
@@ -572,7 +648,7 @@ void LR::draw_graph() {
     }
 }
 
-void LR::web_output_table() {
+void LALR::web_output_table() {
     // 终结符
     for (auto vt : G.Vt) {
         if (vt != '#') {
@@ -587,6 +663,7 @@ void LR::web_output_table() {
     }
 
     // 表
+
     for (int i = 0; i < C.size(); i++) {
 
         vector<string>one_tb;
@@ -638,7 +715,7 @@ void LR::web_output_table() {
 
 }
 
-void LR::web_output_steps() {
+void LALR::web_output_steps() {
     bool success = false;
     // 先将#入分析栈
     // 不加其实也没关系
@@ -738,7 +815,7 @@ void LR::web_output_steps() {
     }
 }
 
-string LR::get_data() {
+string LALR::get_data() {
     string data = j.dump();
     return data;
 }
