@@ -22,8 +22,8 @@ using namespace std;
 
 
 // 产生式
-class Prod {
-    friend class Item;
+class Prod_LR1 {
+    friend class Item_LR1;
     friend class LR;
 
 public:
@@ -40,30 +40,30 @@ public:
         return string(in.begin() + i, in.begin() + j);
     }
     static string replaceAll(const string& in, const string from, const string to);
-    Prod(const string& in);
-    Prod(const char& VT, const string& right, const set<char>& prospect) :
+    Prod_LR1(const string& in);
+    Prod_LR1(const char& VT, const string& right, const set<char>& prospect) :
             left_VN(VT), right(right), prospect(prospect) {}
 
 private:
     char left_VN; // 产生式左部非终结符名字
     string right; // 产生式右部
-    friend bool operator == (const Prod& a, const Prod& b) {
+    friend bool operator == (const Prod_LR1& a, const Prod_LR1& b) {
         return a.left_VN == b.left_VN && a.right == b.right;
     }
-    friend bool operator == (const Prod& a, char c) {
+    friend bool operator == (const Prod_LR1& a, char c) {
         return a.left_VN == c;
     }
 
 };
 
-class Item { // 项目集
+class Item_LR1 { // 项目集
     friend class LR;
 private:
-    vector<Prod> prods; // 项目集
+    vector<Prod_LR1> prods; // 项目集
     static set<char> Vn; // 非终结符
     static set<char> Vt; // 终结符
     static set<char> Symbol; // 所有符号
-    friend bool operator == (const Item& a, const Item& b) {
+    friend bool operator == (const Item_LR1& a, const Item_LR1& b) {
         if (a.prods.size() != b.prods.size()) return false;
         else {
             for (const auto& p : a.prods) {// 选择a的每个产生式
@@ -85,7 +85,7 @@ public:
 
 class LR {
 private:
-    Item G; // 文法G
+    Item_LR1 G; // 文法G
     enum actionStat {
         ACCEPT = 0,
         SHIFT,
@@ -93,7 +93,7 @@ private:
     };
     static const char* actionStatStr[];
 
-    vector<Item> C; // 项目集规范族
+    vector<Item_LR1> C; // 项目集规范族
     map<pair<int, char>, int> GOTO; // goto数组，项目集<int, int>=char
     map<pair<int, char>, pair<actionStat, int> > ACTION; // Action数组，Action[(i, a)]=(s|r)j
     map<char, set<char> > FIRST; // first集
@@ -103,8 +103,8 @@ private:
     vector<char> inStr; // 输入串/栈
     vector<int> status; // 状态栈
     vector<char> parse; // 分析栈
-    Item closure(Item I); // 求该项目的闭包
-    Item Goto(const Item& I, char X); // 求I经过X到达的项目集
+    Item_LR1 closure(Item_LR1 I); // 求该项目的闭包
+    Item_LR1 Goto(const Item_LR1& I, char X); // 求I经过X到达的项目集
     void items(); // 求项目集状态机DFA！!
 
     json j;

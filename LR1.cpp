@@ -1,20 +1,20 @@
 #include "LR1.h"
 
-set<char>Item::Vn;
-set<char>Item::Vt;
-set<char>Item::Symbol;
+set<char>Item_LR1::Vn;
+set<char>Item_LR1::Vt;
+set<char>Item_LR1::Symbol;
 const char* LR::actionStatStr[] = {
         "acc",
         "s",
         "r"
 };
 
-Prod::Prod(const string& in) {
+Prod_LR1::Prod_LR1(const string& in) {
     left_VN = in[0];
     right = cut(in, 3, in.length()); // A->X1X2X3X4
 }
 
-void Item::analyse_grammar_line(const string& prod) {
+void Item_LR1::analyse_grammar_line(const string& prod) {
 
     // 先将最左边的非终结符加入
     Vn.insert(prod[0]);
@@ -37,7 +37,7 @@ void Item::analyse_grammar_line(const string& prod) {
     for (int i = 3; i < prod.length(); i++) {
         int j;
         for (j = i + 1; j < prod.length() && prod[j] != '|'; j++);
-        Prod p = Prod(string(1, prod[0]) + "->" + Prod::cut(prod, i, j));
+        Prod_LR1 p = Prod_LR1(string(1, prod[0]) + "->" + Prod_LR1::cut(prod, i, j));
         if (find(prods.begin(), prods.end(), p) == prods.end()) // 去重
             prods.push_back(p);
         i = j;
@@ -67,13 +67,13 @@ void LR::web_input(string grammars, string expression) {
     }
 }
 
-Item LR::closure(Item I) {
+Item_LR1 LR::closure(Item_LR1 I) {
     if (I.prods.size() == 0) return I;
 
     // 枚举I的产生式
     for (int i = 0; i < I.prods.size(); ++i) {
 
-        Prod prod = I.prods[i];
+        Prod_LR1 prod = I.prods[i];
         unsigned long pointLoc = 0;
         if ((pointLoc = prod.right.find('.')) != string::npos && pointLoc != prod.right.length() - 1) { // 找到.，A->a.Bc,d
             char X = prod.right[pointLoc + 1];
@@ -84,7 +84,7 @@ Item LR::closure(Item I) {
                 continue;
             }
 
-            string f = Prod::cut(prod.right, pointLoc + 2, prod.right.length());
+            string f = Prod_LR1::cut(prod.right, pointLoc + 2, prod.right.length());
 
             set<char> ff = {};
             for (const auto& c : prod.prospect) {
@@ -92,9 +92,9 @@ Item LR::closure(Item I) {
                 ff.insert(fs.begin(), fs.end());
             }
 
-            for (vector<Prod>::iterator it = G.prods.begin(); it != G.prods.end(); ++it) {
+            for (vector<Prod_LR1>::iterator it = G.prods.begin(); it != G.prods.end(); ++it) {
                 if (*it == X) { // 找到产生式
-                    Prod p = *it;
+                    Prod_LR1 p = *it;
                     if (p.right[0] == '@') { // 特殊处理.@ => @.
                         p.right = '.' + p.right;
                         swap(p.right[0], p.right[1]);
@@ -102,7 +102,7 @@ Item LR::closure(Item I) {
                     else
                         p.right = '.' + p.right;
 
-                    vector<Prod>::iterator Iit = find(I.prods.begin(), I.prods.end(), p); // 找I中是否存在产生式
+                    vector<Prod_LR1>::iterator Iit = find(I.prods.begin(), I.prods.end(), p); // 找I中是否存在产生式
                     if (Iit != I.prods.end())  // 找到
                         Iit->prospect.insert(ff.begin(), ff.end());
                     else {
@@ -117,8 +117,8 @@ Item LR::closure(Item I) {
     return I;
 }
 
-Item LR::Goto(const Item& I, char X) {
-    Item J;
+Item_LR1 LR::Goto(const Item_LR1& I, char X) {
+    Item_LR1 J;
     // 项目集为空或者X==@空字
     if (I.prods.size() == 0 || X == '@') return J;
 
@@ -128,7 +128,7 @@ Item LR::Goto(const Item& I, char X) {
         unsigned long pointLoc = right.find('.');
         if (right[pointLoc + 1] == X) {
             swap(right[pointLoc], right[pointLoc + 1]);
-            J.prods.push_back(Prod(p.left_VN, right, p.prospect));
+            J.prods.push_back(Prod_LR1(p.left_VN, right, p.prospect));
         }
     }
     return closure(J);
@@ -136,9 +136,9 @@ Item LR::Goto(const Item& I, char X) {
 
 // 求项目集状态机DFA
 void LR::items() {
-    Item initial;
+    Item_LR1 initial;
     // 拓展文法
-    initial.prods.push_back(Prod('^', '.' + string(1, G.prods[0].left_VN), { '#' }));
+    initial.prods.push_back(Prod_LR1('^', '.' + string(1, G.prods[0].left_VN), { '#' }));
     // 求初状态对应项目
     C.push_back(closure(initial));
 
@@ -149,10 +149,10 @@ void LR::items() {
         size = C.size();
         // 对已有每个的项目集求解伸出一条弧后指向的状态(项目集)
         for (int i = 0; i < C.size(); i++) {
-            Item I = C[i];
+            Item_LR1 I = C[i];
             // 每个文法符号X找出伸出的弧并求项目
             for (const auto& X : G.Symbol) {
-                Item next = Goto(I, X);
+                Item_LR1 next = Goto(I, X);
                 // 不为空时才可以增加到总项目集中
                 if (next.prods.size() != 0) {
                     auto it = find(C.begin(), C.end(), next);
@@ -185,7 +185,7 @@ void LR::build_table() {
     items();
     // 遍历每个状态(项目集)
     for (int i = 0; i < C.size(); i++) {
-        const Item& item = C[i];
+        const Item_LR1& item = C[i];
         // 遍历每个产生式
         for (const auto& prod : item.prods) {
             unsigned long pointLoc = prod.right.find('.');
@@ -200,13 +200,13 @@ void LR::build_table() {
             }
                 // 。在最后
             else {
-                if (prod == Prod('^', string(1, G.prods[0].left_VN) + '.', {}) && prod.prospect == set<char>({ '#' }))  // S'->S.,# acction[i, #] = acc
+                if (prod == Prod_LR1('^', string(1, G.prods[0].left_VN) + '.', {}) && prod.prospect == set<char>({ '#' }))  // S'->S.,# acction[i, #] = acc
                     ACTION[make_pair(i, '#')] = make_pair(ACCEPT, 0);
                 else if (prod.left_VN != '^') {
                     string right = prod.right;
                     right.erase(pointLoc, 1); // 删除.
                     for (const auto& X : prod.prospect) { // A->a.,b，枚举b
-                        vector<Prod>::iterator it = find(G.prods.begin(), G.prods.end(), Prod(prod.left_VN, right, set<char>{}));
+                        vector<Prod_LR1>::iterator it = find(G.prods.begin(), G.prods.end(), Prod_LR1(prod.left_VN, right, set<char>{}));
                         if (it != G.prods.end())  // 找到了
                             ACTION[make_pair(i, X)] = make_pair(REDUCE, it - G.prods.begin());
                     }
@@ -231,14 +231,14 @@ set<char> LR::first(const string& s) { // s不为产生式！
         else
         if (FIRST[s[0]].size() != 0) return FIRST[s[0]];
         else {
-            for (vector<Prod>::iterator it = G.prods.begin(); it != G.prods.end(); ++it)
+            for (vector<Prod_LR1>::iterator it = G.prods.begin(); it != G.prods.end(); ++it)
                 if (*it == s[0]) {
                     // 防止直接左递归
                     int xPos = it->right.find(it->left_VN);
                     if (xPos != string::npos) { // 找到X->aXb
                         if (xPos == 0) continue; // X->Xb
                         else { // X->aXb
-                            string a = Prod::cut(it->right, 0, xPos);
+                            string a = Prod_LR1::cut(it->right, 0, xPos);
                             if (first(a) == set<char>{'@'}) continue;
                         }
                     }
@@ -293,7 +293,7 @@ void LR::follow() {
     }
 }
 
-string Prod::replaceAll(const string& in, const string from, const string to) {
+string Prod_LR1::replaceAll(const string& in, const string from, const string to) {
     size_t replacePos = in.find(from);
     string res = in;
     if (replacePos != string::npos)
@@ -313,7 +313,7 @@ void LR::draw_graph() {
         for (const auto& p : I.prods) { // 列出项目
             string res = p.displayStr();
             if (res.find('^') != string::npos)
-                res = Prod::replaceAll(res, "^", string(1, G.prods[0].left_VN) + "'");
+                res = Prod_LR1::replaceAll(res, "^", string(1, G.prods[0].left_VN) + "'");
             s.push_back(res.c_str());
         }
         j["n"].push_back(s);
@@ -465,7 +465,7 @@ void LR::web_output_steps() {
             // 归约
         else if (act.first == REDUCE) {
             string s = "r" + to_string(act.second) + ":";
-            Prod p = G.prods[act.second];
+            Prod_LR1 p = G.prods[act.second];
             s += string(1, p.left_VN) + "->" + p.right + " Reduce, GOTO(" + to_string(status[status.size() - 1]) + "," + string(1, p.left_VN) + ")=";
             // 空串，无需出栈，直接规约
             if (p.right != "@") {
