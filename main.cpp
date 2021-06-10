@@ -1,6 +1,7 @@
 #include"LALR.h"
 #include<cpp-httplib/httplib.h>
 #include"OPA.h"
+#include"Lex.h"
 using namespace httplib;
 int main() {
 
@@ -10,8 +11,16 @@ int main() {
         res.set_content("编译原理课程设计", "text/plain");
 
     });
-    svr.Get("/opa", [](const Request& req, Response& res) {
+    svr.Get("/lex", [](const Request& req, Response& res) {
+        Lex lex;
+        auto words = req.get_param_value("words");
+        auto keywords = req.get_param_value("keywords");
+        auto delimiters = req.get_param_value("delimiters");
+        string web_output = lex.run(words,keywords,delimiters,"web");
+        res.set_content(web_output, "text/plain");
 
+    });
+    svr.Get("/opa", [](const Request& req, Response& res) {
 
             //web_input("S->a|^|(T)\nT->T,S|S\n#\n","(a,(a,a))#");
 
