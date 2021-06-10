@@ -20,6 +20,16 @@ int main() {
         res.set_content(web_output, "text/plain");
 
     });
+    svr.Get("/ll1", [](const Request& req, Response& res) {
+        LL1 ll1;
+
+        auto grammars = req.get_param_value("grammar");
+        auto expression = req.get_param_value("expression");
+
+        string data=ll1.run(grammars, expression);
+        res.set_content(data, "application/json");
+
+    });
     svr.Get("/opa", [](const Request& req, Response& res) {
 
             //web_input("S->a|^|(T)\nT->T,S|S\n#\n","(a,(a,a))#");
