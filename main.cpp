@@ -11,7 +11,7 @@ int main() {
     });
 
 
-    svr.Get("/lr1", [](const Request& req, Response& res) {
+    svr.Get("/lalr", [](const Request& req, Response& res) {
 
         auto grammar = req.get_param_value("grammar");
         auto expression = req.get_param_value("expression");

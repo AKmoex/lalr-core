@@ -456,12 +456,13 @@ void LALR::merge(){
                     C.assign(C_copy.begin(), C_copy.end());
                     cout<<C.size()<<endl;
                     GOTO=GOTO_copy;
+                    type="LR1";
                     cout<<"ÓÃLR1·ÖÎö"<<endl;
                 }
 
             }
 
-
+            j["type"]=type;
 
 
 
@@ -754,6 +755,10 @@ void LALR::web_output_steps() {
         if (ACTION.find(p) == ACTION.end()) {
             one_step.push_back("ERROR");
             j["Process"].push_back(one_step);
+            tree_node.push_back("e");
+            tree_node.push_back(one_step[2]);
+
+            j["Tree"].push_back(tree_node);
             break;
         }
 
@@ -819,3 +824,4 @@ string LALR::get_data() {
     string data = j.dump();
     return data;
 }
+

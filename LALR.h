@@ -123,7 +123,7 @@ private:
     Item Goto(const Item& I, char X); // 求I经过X到达的项目集
     void items(); // 求项目集状态机DFA！!
     void merge(); // 合并同心项目集族
-    string type; // 所用的分析方法
+    string type="LALR"; // 所用的分析方法
 
     json j;
 public:
