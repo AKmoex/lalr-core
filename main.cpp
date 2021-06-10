@@ -2,15 +2,19 @@
 #include<cpp-httplib/httplib.h>
 #include"OPA.h"
 #include"Lex.h"
+#include"Ll1.h"
+#include"LR1.h"
 using namespace httplib;
 int main() {
 
     Server svr;
     cout << "http server已启动" << endl;
+
     svr.Get("/", [](const Request& req, Response& res) {
         res.set_content("编译原理课程设计", "text/plain");
 
     });
+
     svr.Get("/lex", [](const Request& req, Response& res) {
         Lex lex;
         auto words = req.get_param_value("words");
@@ -20,6 +24,7 @@ int main() {
         res.set_content(web_output, "text/plain");
 
     });
+
     svr.Get("/ll1", [](const Request& req, Response& res) {
         LL1 ll1;
 
@@ -30,6 +35,20 @@ int main() {
         res.set_content(data, "application/json");
 
     });
+
+    svr.Get("/lr1", [](const Request& req, Response& res) {
+
+        auto grammar = req.get_param_value("grammar");
+        auto expression = req.get_param_value("expression");
+
+        LR lr;
+        lr.web_input(grammar, expression);
+        lr.run();
+        string data = lr.get_data();
+        res.set_content(data, "application/json");
+
+    });
+
     svr.Get("/opa", [](const Request& req, Response& res) {
 
             //web_input("S->a|^|(T)\nT->T,S|S\n#\n","(a,(a,a))#");
