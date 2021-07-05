@@ -1,4 +1,4 @@
-C:\Users\AKmoex\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\AKmoex\Desktop\LALR-core
+C:\Users\AKmoex\AppData\Local\JetBrains\Toolbox\apps\CLion\ch-0\211.7142.21\bin\cmake\win\bin\cmake.exe -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" C:\Users\AKmoex\Desktop\lalr-core
 -- Configuring done
 -- Generating done
 -- Build files have been written to: C:/Users/AKmoex/Desktop/lalr-core/cmake-build-debug

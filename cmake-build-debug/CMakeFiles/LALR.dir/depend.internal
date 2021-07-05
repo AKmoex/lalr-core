@@ -4,6 +4,28 @@
 CMakeFiles/LALR.dir/LALR.cpp.obj
  C:/Users/AKmoex/Desktop/lalr-core/LALR.cpp
  C:/Users/AKmoex/Desktop/lalr-core/LALR.h
+ C:/Users/AKmoex/Desktop/lalr-core/json/single_include/nlohmann/json.hpp
+CMakeFiles/LALR.dir/LL1.cpp.obj
+ C:/Users/AKmoex/Desktop/lalr-core/LL1.cpp
+ C:/Users/AKmoex/Desktop/lalr-core/LL1.h
+ C:/Users/AKmoex/Desktop/lalr-core/json/single_include/nlohmann/json.hpp
+CMakeFiles/LALR.dir/LR1.cpp.obj
+ C:/Users/AKmoex/Desktop/lalr-core/LR1.cpp
+ C:/Users/AKmoex/Desktop/lalr-core/LR1.h
+ C:/Users/AKmoex/Desktop/lalr-core/json/single_include/nlohmann/json.hpp
+CMakeFiles/LALR.dir/Lex.cpp.obj
+ C:/Users/AKmoex/Desktop/lalr-core/Lex.cpp
+ C:/Users/AKmoex/Desktop/lalr-core/Lex.h
+CMakeFiles/LALR.dir/OPA.cpp.obj
+ C:/Users/AKmoex/Desktop/lalr-core/OPA.cpp
+ C:/Users/AKmoex/Desktop/lalr-core/OPA.h
+ C:/Users/AKmoex/Desktop/lalr-core/json/single_include/nlohmann/json.hpp
 CMakeFiles/LALR.dir/main.cpp.obj
+ ../cpp-httplib/httplib.h
  C:/Users/AKmoex/Desktop/lalr-core/LALR.h
+ C:/Users/AKmoex/Desktop/lalr-core/LL1.h
+ C:/Users/AKmoex/Desktop/lalr-core/LR1.h
+ C:/Users/AKmoex/Desktop/lalr-core/Lex.h
+ C:/Users/AKmoex/Desktop/lalr-core/OPA.h
+ C:/Users/AKmoex/Desktop/lalr-core/json/single_include/nlohmann/json.hpp
  C:/Users/AKmoex/Desktop/lalr-core/main.cpp

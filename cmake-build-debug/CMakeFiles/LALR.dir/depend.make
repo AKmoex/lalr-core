@@ -3,7 +3,29 @@
 
 CMakeFiles/LALR.dir/LALR.cpp.obj: ../LALR.cpp
 CMakeFiles/LALR.dir/LALR.cpp.obj: ../LALR.h
+CMakeFiles/LALR.dir/LALR.cpp.obj: ../json/single_include/nlohmann/json.hpp
 
+CMakeFiles/LALR.dir/LL1.cpp.obj: ../LL1.cpp
+CMakeFiles/LALR.dir/LL1.cpp.obj: ../LL1.h
+CMakeFiles/LALR.dir/LL1.cpp.obj: ../json/single_include/nlohmann/json.hpp
+
+CMakeFiles/LALR.dir/LR1.cpp.obj: ../LR1.cpp
+CMakeFiles/LALR.dir/LR1.cpp.obj: ../LR1.h
+CMakeFiles/LALR.dir/LR1.cpp.obj: ../json/single_include/nlohmann/json.hpp
+
+CMakeFiles/LALR.dir/Lex.cpp.obj: ../Lex.cpp
+CMakeFiles/LALR.dir/Lex.cpp.obj: ../Lex.h
+
+CMakeFiles/LALR.dir/OPA.cpp.obj: ../OPA.cpp
+CMakeFiles/LALR.dir/OPA.cpp.obj: ../OPA.h
+CMakeFiles/LALR.dir/OPA.cpp.obj: ../json/single_include/nlohmann/json.hpp
+
+CMakeFiles/LALR.dir/main.cpp.obj: ../cpp-httplib/httplib.h
 CMakeFiles/LALR.dir/main.cpp.obj: ../LALR.h
+CMakeFiles/LALR.dir/main.cpp.obj: ../LL1.h
+CMakeFiles/LALR.dir/main.cpp.obj: ../LR1.h
+CMakeFiles/LALR.dir/main.cpp.obj: ../Lex.h
+CMakeFiles/LALR.dir/main.cpp.obj: ../OPA.h
+CMakeFiles/LALR.dir/main.cpp.obj: ../json/single_include/nlohmann/json.hpp
 CMakeFiles/LALR.dir/main.cpp.obj: ../main.cpp
 

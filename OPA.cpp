@@ -579,8 +579,26 @@ void web_output(){
 
 }
 
+void init(){
+    js.clear();
+    memset(table,0,sizeof(table));
+    memset(s,0,sizeof(s));
+    memset(str_in,0,sizeof(str_in));
+    memset(T_label,0,sizeof(T_label));
+    memset(input_s,0,sizeof(input_s));
+    memset(FVT,0,sizeof(FVT));
+    memset(LVT,0,sizeof(LVT));
+    memset(grammar,0,sizeof(grammar));
+    memset(FIRSTVT,0,sizeof(FIRSTVT));
+    memset(LASTVT,0,sizeof(LASTVT));
+    k=0;
+    r=0;
+    r1=0;
+
+}
 string run(string grammars,string expression){
-    web_input("E->E+T|T\nT->T*F|F\nF->(E)|i\n#\n","i+i#");
+    init();
+    web_input(grammars,expression);
     if(judge_ag()){
         js["isOperatorGrammar"]=true;
     }else{

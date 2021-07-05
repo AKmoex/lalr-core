@@ -19,7 +19,7 @@ using namespace std;
 
 
 
-
+void init();
 int test_s();                          //字串分析
 int is_T(char c);
 int index(char c);

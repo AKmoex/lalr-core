@@ -5,6 +5,10 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "C:/Users/AKmoex/Desktop/lalr-core/LALR.cpp" "C:/Users/AKmoex/Desktop/lalr-core/cmake-build-debug/CMakeFiles/LALR.dir/LALR.cpp.obj"
+  "C:/Users/AKmoex/Desktop/lalr-core/LL1.cpp" "C:/Users/AKmoex/Desktop/lalr-core/cmake-build-debug/CMakeFiles/LALR.dir/LL1.cpp.obj"
+  "C:/Users/AKmoex/Desktop/lalr-core/LR1.cpp" "C:/Users/AKmoex/Desktop/lalr-core/cmake-build-debug/CMakeFiles/LALR.dir/LR1.cpp.obj"
+  "C:/Users/AKmoex/Desktop/lalr-core/Lex.cpp" "C:/Users/AKmoex/Desktop/lalr-core/cmake-build-debug/CMakeFiles/LALR.dir/Lex.cpp.obj"
+  "C:/Users/AKmoex/Desktop/lalr-core/OPA.cpp" "C:/Users/AKmoex/Desktop/lalr-core/cmake-build-debug/CMakeFiles/LALR.dir/OPA.cpp.obj"
   "C:/Users/AKmoex/Desktop/lalr-core/main.cpp" "C:/Users/AKmoex/Desktop/lalr-core/cmake-build-debug/CMakeFiles/LALR.dir/main.cpp.obj"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")

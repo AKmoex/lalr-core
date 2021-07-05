@@ -88,6 +88,30 @@
 		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/LALR.h">
 			<Option target="LALR"/>
 		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/LL1.cpp">
+			<Option target="LALR"/>
+		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/LL1.h">
+			<Option target="LALR"/>
+		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/LR1.cpp">
+			<Option target="LALR"/>
+		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/LR1.h">
+			<Option target="LALR"/>
+		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/Lex.cpp">
+			<Option target="LALR"/>
+		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/Lex.h">
+			<Option target="LALR"/>
+		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/OPA.cpp">
+			<Option target="LALR"/>
+		</Unit>
+		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/OPA.h">
+			<Option target="LALR"/>
+		</Unit>
 		<Unit filename="C:/Users/AKmoex/Desktop/lalr-core/main.cpp">
 			<Option target="LALR"/>
 		</Unit>

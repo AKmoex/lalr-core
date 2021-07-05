@@ -16,7 +16,7 @@ target_include_directories(cpp-httplib INTERFACE .)
 add_library(json INTERFACE)
 
 
-add_executable(LALR main.cpp LALR.cpp LALR.h)
+add_executable(LALR main.cpp LALR.cpp LALR.h OPA.h OPA.cpp Lex.cpp Lex.h LL1.cpp LL1.h LR1.cpp LR1.h)
 target_link_libraries(LALR cpp-httplib)
 target_link_libraries(LALR json)
 

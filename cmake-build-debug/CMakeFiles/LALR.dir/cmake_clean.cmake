@@ -1,5 +1,9 @@
 file(REMOVE_RECURSE
   "CMakeFiles/LALR.dir/LALR.cpp.obj"
+  "CMakeFiles/LALR.dir/LL1.cpp.obj"
+  "CMakeFiles/LALR.dir/LR1.cpp.obj"
+  "CMakeFiles/LALR.dir/Lex.cpp.obj"
+  "CMakeFiles/LALR.dir/OPA.cpp.obj"
   "CMakeFiles/LALR.dir/main.cpp.obj"
   "LALR.exe"
   "LALR.exe.manifest"

@@ -103,21 +103,85 @@ CMakeFiles/LALR.dir/LALR.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LALR.dir/LALR.cpp.s"
 	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\AKmoex\Desktop\lalr-core\LALR.cpp -o CMakeFiles\LALR.dir\LALR.cpp.s
 
+CMakeFiles/LALR.dir/OPA.cpp.obj: CMakeFiles/LALR.dir/flags.make
+CMakeFiles/LALR.dir/OPA.cpp.obj: CMakeFiles/LALR.dir/includes_CXX.rsp
+CMakeFiles/LALR.dir/OPA.cpp.obj: ../OPA.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\AKmoex\Desktop\lalr-core\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/LALR.dir/OPA.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\LALR.dir\OPA.cpp.obj -c C:\Users\AKmoex\Desktop\lalr-core\OPA.cpp
+
+CMakeFiles/LALR.dir/OPA.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LALR.dir/OPA.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\AKmoex\Desktop\lalr-core\OPA.cpp > CMakeFiles\LALR.dir\OPA.cpp.i
+
+CMakeFiles/LALR.dir/OPA.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LALR.dir/OPA.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\AKmoex\Desktop\lalr-core\OPA.cpp -o CMakeFiles\LALR.dir\OPA.cpp.s
+
+CMakeFiles/LALR.dir/Lex.cpp.obj: CMakeFiles/LALR.dir/flags.make
+CMakeFiles/LALR.dir/Lex.cpp.obj: CMakeFiles/LALR.dir/includes_CXX.rsp
+CMakeFiles/LALR.dir/Lex.cpp.obj: ../Lex.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\AKmoex\Desktop\lalr-core\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/LALR.dir/Lex.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\LALR.dir\Lex.cpp.obj -c C:\Users\AKmoex\Desktop\lalr-core\Lex.cpp
+
+CMakeFiles/LALR.dir/Lex.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LALR.dir/Lex.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\AKmoex\Desktop\lalr-core\Lex.cpp > CMakeFiles\LALR.dir\Lex.cpp.i
+
+CMakeFiles/LALR.dir/Lex.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LALR.dir/Lex.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\AKmoex\Desktop\lalr-core\Lex.cpp -o CMakeFiles\LALR.dir\Lex.cpp.s
+
+CMakeFiles/LALR.dir/LL1.cpp.obj: CMakeFiles/LALR.dir/flags.make
+CMakeFiles/LALR.dir/LL1.cpp.obj: CMakeFiles/LALR.dir/includes_CXX.rsp
+CMakeFiles/LALR.dir/LL1.cpp.obj: ../LL1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\AKmoex\Desktop\lalr-core\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/LALR.dir/LL1.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\LALR.dir\LL1.cpp.obj -c C:\Users\AKmoex\Desktop\lalr-core\LL1.cpp
+
+CMakeFiles/LALR.dir/LL1.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LALR.dir/LL1.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\AKmoex\Desktop\lalr-core\LL1.cpp > CMakeFiles\LALR.dir\LL1.cpp.i
+
+CMakeFiles/LALR.dir/LL1.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LALR.dir/LL1.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\AKmoex\Desktop\lalr-core\LL1.cpp -o CMakeFiles\LALR.dir\LL1.cpp.s
+
+CMakeFiles/LALR.dir/LR1.cpp.obj: CMakeFiles/LALR.dir/flags.make
+CMakeFiles/LALR.dir/LR1.cpp.obj: CMakeFiles/LALR.dir/includes_CXX.rsp
+CMakeFiles/LALR.dir/LR1.cpp.obj: ../LR1.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\AKmoex\Desktop\lalr-core\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/LALR.dir/LR1.cpp.obj"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\LALR.dir\LR1.cpp.obj -c C:\Users\AKmoex\Desktop\lalr-core\LR1.cpp
+
+CMakeFiles/LALR.dir/LR1.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/LALR.dir/LR1.cpp.i"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\AKmoex\Desktop\lalr-core\LR1.cpp > CMakeFiles\LALR.dir\LR1.cpp.i
+
+CMakeFiles/LALR.dir/LR1.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/LALR.dir/LR1.cpp.s"
+	C:\PROGRA~2\MINGW-~1\I686-8~1.0-P\mingw32\bin\G__~1.EXE $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\AKmoex\Desktop\lalr-core\LR1.cpp -o CMakeFiles\LALR.dir\LR1.cpp.s
+
 # Object files for target LALR
 LALR_OBJECTS = \
 "CMakeFiles/LALR.dir/main.cpp.obj" \
-"CMakeFiles/LALR.dir/LALR.cpp.obj"
+"CMakeFiles/LALR.dir/LALR.cpp.obj" \
+"CMakeFiles/LALR.dir/OPA.cpp.obj" \
+"CMakeFiles/LALR.dir/Lex.cpp.obj" \
+"CMakeFiles/LALR.dir/LL1.cpp.obj" \
+"CMakeFiles/LALR.dir/LR1.cpp.obj"
 
 # External object files for target LALR
 LALR_EXTERNAL_OBJECTS =
 
 LALR.exe: CMakeFiles/LALR.dir/main.cpp.obj
 LALR.exe: CMakeFiles/LALR.dir/LALR.cpp.obj
+LALR.exe: CMakeFiles/LALR.dir/OPA.cpp.obj
+LALR.exe: CMakeFiles/LALR.dir/Lex.cpp.obj
+LALR.exe: CMakeFiles/LALR.dir/LL1.cpp.obj
+LALR.exe: CMakeFiles/LALR.dir/LR1.cpp.obj
 LALR.exe: CMakeFiles/LALR.dir/build.make
 LALR.exe: CMakeFiles/LALR.dir/linklibs.rsp
 LALR.exe: CMakeFiles/LALR.dir/objects1.rsp
 LALR.exe: CMakeFiles/LALR.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\AKmoex\Desktop\lalr-core\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable LALR.exe"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=C:\Users\AKmoex\Desktop\lalr-core\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Linking CXX executable LALR.exe"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles\LALR.dir\link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

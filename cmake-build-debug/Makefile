@@ -168,6 +168,114 @@ LALR.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LALR.cpp.s
 .PHONY : LALR.cpp.s
 
+LL1.obj: LL1.cpp.obj
+
+.PHONY : LL1.obj
+
+# target to build an object file
+LL1.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LL1.cpp.obj
+.PHONY : LL1.cpp.obj
+
+LL1.i: LL1.cpp.i
+
+.PHONY : LL1.i
+
+# target to preprocess a source file
+LL1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LL1.cpp.i
+.PHONY : LL1.cpp.i
+
+LL1.s: LL1.cpp.s
+
+.PHONY : LL1.s
+
+# target to generate assembly for a file
+LL1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LL1.cpp.s
+.PHONY : LL1.cpp.s
+
+LR1.obj: LR1.cpp.obj
+
+.PHONY : LR1.obj
+
+# target to build an object file
+LR1.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LR1.cpp.obj
+.PHONY : LR1.cpp.obj
+
+LR1.i: LR1.cpp.i
+
+.PHONY : LR1.i
+
+# target to preprocess a source file
+LR1.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LR1.cpp.i
+.PHONY : LR1.cpp.i
+
+LR1.s: LR1.cpp.s
+
+.PHONY : LR1.s
+
+# target to generate assembly for a file
+LR1.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/LR1.cpp.s
+.PHONY : LR1.cpp.s
+
+Lex.obj: Lex.cpp.obj
+
+.PHONY : Lex.obj
+
+# target to build an object file
+Lex.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/Lex.cpp.obj
+.PHONY : Lex.cpp.obj
+
+Lex.i: Lex.cpp.i
+
+.PHONY : Lex.i
+
+# target to preprocess a source file
+Lex.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/Lex.cpp.i
+.PHONY : Lex.cpp.i
+
+Lex.s: Lex.cpp.s
+
+.PHONY : Lex.s
+
+# target to generate assembly for a file
+Lex.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/Lex.cpp.s
+.PHONY : Lex.cpp.s
+
+OPA.obj: OPA.cpp.obj
+
+.PHONY : OPA.obj
+
+# target to build an object file
+OPA.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/OPA.cpp.obj
+.PHONY : OPA.cpp.obj
+
+OPA.i: OPA.cpp.i
+
+.PHONY : OPA.i
+
+# target to preprocess a source file
+OPA.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/OPA.cpp.i
+.PHONY : OPA.cpp.i
+
+OPA.s: OPA.cpp.s
+
+.PHONY : OPA.s
+
+# target to generate assembly for a file
+OPA.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\LALR.dir\build.make CMakeFiles/LALR.dir/OPA.cpp.s
+.PHONY : OPA.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -207,6 +315,18 @@ help:
 	@echo ... LALR.obj
 	@echo ... LALR.i
 	@echo ... LALR.s
+	@echo ... LL1.obj
+	@echo ... LL1.i
+	@echo ... LL1.s
+	@echo ... LR1.obj
+	@echo ... LR1.i
+	@echo ... LR1.s
+	@echo ... Lex.obj
+	@echo ... Lex.i
+	@echo ... Lex.s
+	@echo ... OPA.obj
+	@echo ... OPA.i
+	@echo ... OPA.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

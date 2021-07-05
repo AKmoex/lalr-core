@@ -1,9 +1,9 @@
-#include"LALR.h"
-#include<cpp-httplib/httplib.h>
-#include"OPA.h"
 #include"Lex.h"
 #include"Ll1.h"
 #include"LR1.h"
+#include"OPA.h"
+#include"LALR.h"
+#include<cpp-httplib/httplib.h>
 using namespace httplib;
 int main() {
 
@@ -52,8 +52,11 @@ int main() {
     svr.Get("/opa", [](const Request& req, Response& res) {
 
             //web_input("S->a|^|(T)\nT->T,S|S\n#\n","(a,(a,a))#");
+        auto grammar = req.get_param_value("grammar");
+        auto expression = req.get_param_value("expression");
+        cout<<grammar<<endl;
 
-        string data =run("E->E+T|T\nT->T*F|F\nF->(E)|i\n#\n","i+i#");
+        string data =run(grammar,expression);
 
         res.set_content(data, "application/json");
 
